@@ -1,10 +1,6 @@
 package ru.isands.test.estore.dao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,4 +31,13 @@ public class ElectroShop {
 	 */
 	@Column(name = "count_", nullable = false)
 	int count;
+
+	@ManyToOne
+	@JoinColumn(name = "shopId", insertable = false, updatable = false)
+	Shop shop;
+
+	@ManyToOne
+	@JoinColumn(name = "electroItemId", insertable = false, updatable = false)
+	ElectroItem electroItem;
+
 }

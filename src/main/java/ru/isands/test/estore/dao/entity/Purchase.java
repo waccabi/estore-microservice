@@ -4,13 +4,7 @@ package ru.isands.test.estore.dao.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,38 +22,49 @@ public class Purchase implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "purchase_counter")
-	@TableGenerator(name = "purchase_counter", pkColumnName = "name", pkColumnValue = "ru.isands.test.estore.dao.entity.Purchase", table = "counter", valueColumnName = "currentid", allocationSize = 1)
+	@TableGenerator(
+			name = "purchase_counter",
+			pkColumnName = "name",
+			pkColumnValue = "ru.isands.test.estore.dao.entity.Purchase",
+			table = "counter",
+			valueColumnName = "currentid",
+			allocationSize = 1)
 	@Column(name = "id_", unique = true, nullable = false)
 	Long id;
 	
 	/**
-	 * Идентификатор товара
+	 * Идентификатор электротовара
 	 */
-	@Column(name = "electroId", nullable = false)
-	Long electroId;
+	@JoinColumn(name = "electroId", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	ElectroItem electroId;
 	
 	/**
 	 * Идентификатор сотрудника
 	 */
-	@Column(name = "employeeId", nullable = false)
-	Long employeeId;
+	@JoinColumn(name = "employeeId", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	Employee employeeId;
 	
 	/**
 	 * Идентификатор магазина
 	 */
-	@Column(name = "shopId", nullable = false)
-	Long shopId;
-	
+	@JoinColumn(name = "shopId", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	Shop shopId;
+
+	/**
+	 * Тип покупки
+	 */
+	@JoinColumn(name = "typeId", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	PurchaseType typeId;
+
 	/**
 	 * Дата совершения покупки
 	 */
 	@Column(name = "purchaseDate", nullable = false)
 	Date purchaseDate;
-	
-	/**
-	 * Способ оплаты
-	 */
-	@Column(name = "type", nullable = false)
-	int type;
+
 	
 }

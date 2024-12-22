@@ -2,6 +2,7 @@ package ru.isands.test.estore.dao.repo;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +16,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	
 	@Query("select e from Employee e where e.positionId = ?1")
 	public List<Employee> findByPosition(Long positionId);
-	
+
+	public Optional<Employee> findByLastName(String lastName);
 }
